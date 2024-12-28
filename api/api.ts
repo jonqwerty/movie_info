@@ -1,4 +1,8 @@
+import { storage } from "@/storage/starage"
+
 const BASE_URL = "http://10.0.2.2:8000/api/v1"
+
+const token = storage.getString("token")
 
 export type CreateUser = {
   name: string
@@ -55,5 +59,24 @@ export const movieApi = {
     const data = await response.json()
 
     return { token: data.token, status: data.status, error: data.error } as UserDto
+  },
+
+  getMovies: async () => {
+    const response = await fetch(`${BASE_URL}/movies?sort=title&limit=1000`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.message || "Failed to get movies")
+    }
+
+    const data = await response.json()
+
+    return data
   },
 }
