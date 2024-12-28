@@ -1,13 +1,14 @@
-import { KeyboardTypeOptions, StyleSheet, TextInput, View } from "react-native"
+import { KeyboardTypeOptions, StyleSheet, TextInput, View, Text } from "react-native"
 import React, { FC, ReactNode } from "react"
 
 import { COLORS } from "@/constants/constants"
+import { Format } from "@/api/api"
 
 type Input = {
   icon?: ReactNode
   value: string
   placeholder: string
-  setValue: (text: string) => void
+  setValue: (text: Format | string) => void
   valueIsFocused: boolean
   setValueIsFocused: (value: boolean) => void
   keyboardType: KeyboardTypeOptions

@@ -23,7 +23,7 @@ export type CreateUser = {
 export type CreateMovie = {
   title: string
   year: number
-  format: Format
+  format: Format | string
   actors: string[]
 }
 
@@ -39,13 +39,18 @@ export type UserDto = {
 }
 
 export type CreateMovieDto = {
-  id: number
-  title: string
-  year: number
-  format: Format
-  actors: Actor[]
-  createdAt: Date
-  updatedAt: Date
+  status: number
+  token?: string
+  error?: { code: string; fields: object }
+  data: {
+    id: number
+    title: string
+    year: number
+    format: Format | string
+    actors: Actor[]
+    createdAt: Date
+    updatedAt: Date
+  }
 }
 
 export const movieApi = {
@@ -111,6 +116,7 @@ export const movieApi = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token}`,
       },
       body: JSON.stringify(movieData),
     })
@@ -121,7 +127,7 @@ export const movieApi = {
     }
 
     const data = await response.json()
-
-    return data as CreateMovieDto
+    console.log(data)
+    return { data: data.data, status: data.status, error: data.error } as CreateMovieDto
   },
 }

@@ -14,7 +14,7 @@ import { usePathname, useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
 
 import { COLORS } from "@/constants/constants"
-import Divider from "@/components/Divider"
+import Divider from "@/core/Divider"
 import { CreateUser, movieApi } from "@/api/api"
 import { EMAIL_REGEX } from "@/constants/constants"
 import { storage } from "@/storage/starage"

@@ -13,7 +13,7 @@ import { useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
 
 import { COLORS, EMAIL_REGEX } from "@/constants/constants"
-import Divider from "@/components/Divider"
+import Divider from "@/core/Divider"
 import { movieApi, SignInUser } from "@/api/api"
 import { storage } from "@/storage/starage"
 
