@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "movie_info",
+    "name": "MovieInfo",
     "slug": "movie_info",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.serhiik.movie_info"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,12 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-dev-launcher",
+        {
+          "launchMode": "most-recent"
         }
       ]
     ],
