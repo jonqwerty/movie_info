@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react"
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-  Alert,
-  ActivityIndicator,
-} from "react-native"
+import { Text, View, StyleSheet, ScrollView, Alert, ActivityIndicator } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { usePathname, useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
@@ -18,6 +9,8 @@ import Divider from "@/core/Divider"
 import { CreateUser, movieApi } from "@/api/api"
 import { EMAIL_REGEX } from "@/constants/constants"
 import { storage } from "@/storage/starage"
+import Input from "@/core/Input"
+import Button from "@/core/Button"
 
 const Page = () => {
   const router = useRouter()
@@ -113,101 +106,54 @@ const Page = () => {
         <Text style={styles.logo}>MovieInfo</Text>
         <Divider height={40} isTransparent />
 
-        <View style={styles.inputContainer}>
-          <AntDesign name="user" size={24} />
-          <TextInput
-            cursorColor={COLORS.grey}
-            style={name ? styles.input : styles.inputPlacheholder}
-            value={name}
-            maxLength={40}
-            onChangeText={(text) => setName(text)}
-            placeholderTextColor={COLORS.grey}
-            placeholder={nameIsFocused ? "" : "Name"}
-            onFocus={() => setNameIsFocused(true)}
-            onBlur={() => {
-              const trimmedText = name.trim()
-              setName(trimmedText)
-              if (!trimmedText) setNameIsFocused(false)
-              if (trimmedText) setNameIsFocused(true)
-            }}
-          />
-        </View>
+        <Input
+          icon={<AntDesign name="user" size={24} />}
+          value={name}
+          setValue={setName}
+          placeholder="Name"
+          valueIsFocused={nameIsFocused}
+          setValueIsFocused={setNameIsFocused}
+          keyboardType={"default"}
+        />
 
         <Divider height={10} isTransparent />
-
-        <View style={styles.inputContainer}>
-          <AntDesign name="mail" size={24} />
-          <TextInput
-            cursorColor={COLORS.grey}
-            style={email ? styles.input : styles.inputPlacheholder}
-            value={email}
-            maxLength={40}
-            onChangeText={(text) => setEmail(text)}
-            keyboardType="email-address"
-            placeholderTextColor={COLORS.grey}
-            placeholder={emailIsFocused ? "" : "Email"}
-            onFocus={() => setEmailIsFocused(true)}
-            onBlur={() => {
-              const trimmedText = email.trim()
-              setEmail(trimmedText)
-
-              if (!trimmedText) setEmailIsFocused(false)
-              if (trimmedText) setEmailIsFocused(true)
-            }}
-          />
-        </View>
+        <Input
+          icon={<AntDesign name="mail" size={24} />}
+          value={email}
+          setValue={setEmail}
+          placeholder="Email"
+          valueIsFocused={emailIsFocused}
+          setValueIsFocused={setEmailIsFocused}
+          keyboardType={"email-address"}
+        />
 
         <Divider height={10} isTransparent />
-
-        <View style={styles.inputContainer}>
-          <AntDesign name="lock" size={24} />
-          <TextInput
-            cursorColor={COLORS.grey}
-            style={password ? styles.input : styles.inputPlacheholder}
-            value={password}
-            maxLength={40}
-            onChangeText={(text) => setPassword(text)}
-            placeholderTextColor={COLORS.grey}
-            placeholder={passwordIsFocused ? "" : "Password"}
-            onFocus={() => setPasswordIsFocused(true)}
-            onBlur={() => {
-              const trimmedText = password.trim()
-              setPassword(trimmedText)
-              if (!trimmedText) setPasswordIsFocused(false)
-              if (trimmedText) setPasswordIsFocused(true)
-            }}
-          />
-        </View>
+        <Input
+          icon={<AntDesign name="lock" size={24} />}
+          value={password}
+          setValue={setPassword}
+          placeholder="Password"
+          valueIsFocused={passwordIsFocused}
+          setValueIsFocused={setPasswordIsFocused}
+          keyboardType={"default"}
+        />
 
         <Divider height={10} isTransparent />
-
-        <View style={styles.inputContainer}>
-          <AntDesign name="lock" size={24} />
-          <TextInput
-            cursorColor={COLORS.grey}
-            style={confirmPassword ? styles.input : styles.inputPlacheholder}
-            value={confirmPassword}
-            maxLength={40}
-            onChangeText={(text) => setConfirmPassword(text)}
-            placeholderTextColor={COLORS.grey}
-            placeholder={confirmPasswordIsFocused ? "" : "Confirm password"}
-            onFocus={() => setConfirmPasswordIsFocused(true)}
-            onBlur={() => {
-              const trimmedText = confirmPassword.trim()
-              setConfirmPassword(trimmedText)
-              if (!trimmedText) setConfirmPasswordIsFocused(false)
-              if (trimmedText) setConfirmPasswordIsFocused(true)
-            }}
-          />
-        </View>
+        <Input
+          icon={<AntDesign name="lock" size={24} />}
+          value={confirmPassword}
+          setValue={setConfirmPassword}
+          placeholder="Confirm password"
+          valueIsFocused={confirmPasswordIsFocused}
+          setValueIsFocused={setConfirmPasswordIsFocused}
+          keyboardType={"default"}
+        />
 
         <Divider height={40} isTransparent />
         {createUserMutation.isPending ? (
           <ActivityIndicator size="large" color={COLORS.blue} />
         ) : (
-          <TouchableOpacity style={styles.btn} onPress={handleSignUp}>
-            <Text style={styles.btnText}>Sign up</Text>
-          </TouchableOpacity>
+          <Button title={"Sign up"} handler={handleSignUp} />
         )}
 
         <Divider height={10} isTransparent />
@@ -242,44 +188,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "500",
   },
-
-  inputContainer: {
-    flexDirection: "row",
-    width: "100%",
-    height: 50,
-    borderWidth: 2,
-    borderColor: COLORS.black,
-    borderRadius: 10,
-    alignItems: "center",
-    paddingHorizontal: 10,
-    backgroundColor: COLORS.white,
-  },
-
-  input: {
-    flex: 1,
-    marginLeft: 10,
-    color: COLORS.black,
-    fontSize: 20,
-  },
-
-  inputPlacheholder: {
-    flex: 1,
-    marginLeft: 10,
-    color: COLORS.grey,
-    fontSize: 20,
-  },
-
-  btn: {
-    width: "100%",
-    height: 50,
-    backgroundColor: COLORS.black,
-    borderColor: COLORS.black,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  btnText: { color: COLORS.white, fontSize: 24, fontWeight: "500" },
 
   haveAccountText: {
     color: COLORS.grey,
