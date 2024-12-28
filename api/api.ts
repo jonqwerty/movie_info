@@ -127,7 +127,7 @@ export const movieApi = {
     }
 
     const data = await response.json()
-    console.log(data)
+
     return { data: data.data, status: data.status, error: data.error } as CreateMovieDto
   },
 }
