@@ -1,4 +1,4 @@
-import { KeyboardTypeOptions, StyleSheet, TextInput, View, Text } from "react-native"
+import { KeyboardTypeOptions, StyleSheet, TextInput, View } from "react-native"
 import React, { FC, ReactNode } from "react"
 
 import { COLORS } from "@/constants/constants"

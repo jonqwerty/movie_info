@@ -1,4 +1,4 @@
-import { Alert, ScrollView, StyleSheet, View } from "react-native"
+import { Alert, ScrollView, StyleSheet, View, Text } from "react-native"
 import React, { useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "expo-router"
@@ -104,6 +104,7 @@ const Page = () => {
         keyboardShouldPersistTaps="always"
       >
         <Divider height={10} isTransparent />
+        <Text style={styles.textFieldTitle}>Title</Text>
         <Input
           value={title}
           setValue={setTitle}
@@ -114,6 +115,7 @@ const Page = () => {
         />
 
         <Divider height={10} isTransparent />
+        <Text style={styles.textFieldTitle}>Year</Text>
         <Input
           value={year}
           setValue={setYear}
@@ -124,6 +126,7 @@ const Page = () => {
         />
 
         <Divider height={10} isTransparent />
+        <Text style={styles.textFieldTitle}>Format</Text>
         <Input
           value={format}
           setValue={setFormat}
@@ -133,7 +136,7 @@ const Page = () => {
           keyboardType={"default"}
         />
 
-        <Divider height={40} isTransparent />
+        <Divider height={10} isTransparent />
         <AddActor
           actors={actors}
           actor={actor}
@@ -161,4 +164,6 @@ const styles = StyleSheet.create({
   },
 
   contentContainerStyle: { flexGrow: 1, alignItems: "center" },
+
+  textFieldTitle: { alignSelf: "flex-start", fontWeight: "700" },
 })

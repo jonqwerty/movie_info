@@ -24,7 +24,7 @@ const AddActor: FC<AddActorProps> = ({
 }) => {
   return (
     <>
-      <Text>Actors</Text>
+      <Text style={styles.textFieldTitle}>Actors</Text>
 
       <View style={styles.container}>
         {actors?.map((item, index) => {
@@ -80,4 +80,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
   },
+
+  textFieldTitle: { alignSelf: "flex-start", fontWeight: "700" },
 })
