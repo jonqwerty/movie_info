@@ -1,10 +1,21 @@
 import { useState } from "react"
-import { Text, TouchableOpacity, View, StyleSheet, TextInput, ScrollView } from "react-native"
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Alert,
+} from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
 
-import { COLORS } from "@/constants/constants"
+import { COLORS, EMAIL_REGEX } from "@/constants/constants"
 import Divider from "@/components/Divider"
+import { movieApi, SignInUser } from "@/api/api"
+import { storage } from "@/storage/starage"
 
 const Page = () => {
   const router = useRouter()
@@ -15,9 +26,52 @@ const Page = () => {
   const [emailIsFocused, setEmailIsFocused] = useState<boolean>(false)
   const [passwordIsFocused, setPasswordIsFocused] = useState<boolean>(false)
 
+  const signInUserMutation = useMutation({
+    mutationFn: (userData: SignInUser) => movieApi.signInUser(userData),
+    onSuccess: (data) => {
+      if (data.status === 0) {
+        Alert.alert(
+          "Error",
+          `Failed to sign in user. Code: ${data?.error?.code}. Error fields: ${JSON.stringify(
+            data?.error?.fields
+          )}`
+        )
+        return
+      }
+
+      if (data.token) {
+        storage.set("token", data.token)
+        router.back()
+        router.replace("/(authenticated)/movie/list")
+        setEmail("")
+        setPassword("")
+        setEmailIsFocused(false)
+        setPasswordIsFocused(false)
+      }
+    },
+    onError: (error) => {
+      Alert.alert("Error", error.message || "An error occurred")
+    },
+  })
+
   const handleCreteAccount = () => {
     router.back()
   }
+
+  const handleSignIn = () => {
+    if (!email || !password) {
+      Alert.alert("Error", "All fields are required.")
+      return
+    }
+
+    if (!email.match(EMAIL_REGEX)) {
+      Alert.alert("Error", "Email is not valid.")
+      return
+    }
+
+    signInUserMutation.mutate({ email, password })
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -78,7 +132,7 @@ const Page = () => {
 
         <Divider height={40} isTransparent />
 
-        <TouchableOpacity style={styles.btn} onPress={() => {}}>
+        <TouchableOpacity style={styles.btn} onPress={handleSignIn}>
           <Text style={styles.btnText}>Sign in</Text>
         </TouchableOpacity>
 

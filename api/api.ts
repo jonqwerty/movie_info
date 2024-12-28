@@ -7,7 +7,12 @@ export type CreateUser = {
   confirmPassword: string
 }
 
-export type CreateUserDto = {
+export type SignInUser = {
+  email: string
+  password: string
+}
+
+export type UserDto = {
   status: number
   token?: string
   error?: { code: string; fields: object }
@@ -30,6 +35,25 @@ export const movieApi = {
 
     const data = await response.json()
 
-    return { token: data.token, status: data.status, error: data.error } as CreateUserDto
+    return { token: data.token, status: data.status, error: data.error } as UserDto
+  },
+
+  signInUser: async (userData: SignInUser) => {
+    const response = await fetch(`${BASE_URL}/sessions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.message || "Failed to sign in user")
+    }
+
+    const data = await response.json()
+
+    return { token: data.token, status: data.status, error: data.error } as UserDto
   },
 }

@@ -81,7 +81,6 @@ const Page = () => {
   }
 
   const handleSignUp = () => {
-    // router.replace("/(authenticated)/movie/list")
     if (!name || !email || !password || !confirmPassword) {
       Alert.alert("Error", "All fields are required.")
       return
