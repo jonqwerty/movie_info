@@ -5,6 +5,7 @@ export const COLORS = {
   white: "#FFFFFF",
   black: "#000000",
   blue: "#0000ff",
+  pale: "#EFE8DF",
 }
 
 export const EMAIL_REGEX =

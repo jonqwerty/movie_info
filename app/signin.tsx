@@ -157,7 +157,7 @@ export default Page
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.pale,
     alignItems: "center",
     paddingHorizontal: 20,
   },
@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     paddingHorizontal: 10,
+    backgroundColor: COLORS.white,
   },
 
   input: {
