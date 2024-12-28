@@ -203,7 +203,7 @@ const Page = () => {
 
         <Divider height={40} isTransparent />
         {createUserMutation.isPending ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color={COLORS.blue} />
         ) : (
           <TouchableOpacity style={styles.btn} onPress={handleSignUp}>
             <Text style={styles.btnText}>Sign up</Text>

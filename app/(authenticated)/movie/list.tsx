@@ -15,7 +15,7 @@ const Page = () => {
   if (isPending) {
     return (
       <View style={styles.containerLoading}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color={COLORS.blue} />
       </View>
     )
   }
