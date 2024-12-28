@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { movieApi } from "@/api/api"
 import { COLORS } from "@/constants/constants"
+import Fab from "@/components/Fab"
 
 const Page = () => {
   const { data, error, isPending } = useQuery({
@@ -60,6 +61,8 @@ const Page = () => {
           />
         )}
       />
+
+      <Fab />
     </View>
   )
 }

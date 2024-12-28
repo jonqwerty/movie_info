@@ -4,11 +4,27 @@ const BASE_URL = "http://10.0.2.2:8000/api/v1"
 
 const token = storage.getString("token")
 
+export type Format = "VHS" | "DVD" | "Blu-ray"
+
+export type Actor = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
 export type CreateUser = {
   name: string
   email: string
   password: string
   confirmPassword: string
+}
+
+export type CreateMovie = {
+  title: string
+  year: number
+  format: Format
+  actors: string[]
 }
 
 export type SignInUser = {
@@ -20,6 +36,16 @@ export type UserDto = {
   status: number
   token?: string
   error?: { code: string; fields: object }
+}
+
+export type CreateMovieDto = {
+  id: number
+  title: string
+  year: number
+  format: Format
+  actors: Actor[]
+  createdAt: Date
+  updatedAt: Date
 }
 
 export const movieApi = {
@@ -78,5 +104,24 @@ export const movieApi = {
     const data = await response.json()
 
     return data
+  },
+
+  createMovie: async (movieData: CreateMovie) => {
+    const response = await fetch(`${BASE_URL}/movies`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(movieData),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.message || "Failed to create movie")
+    }
+
+    const data = await response.json()
+
+    return data as CreateMovieDto
   },
 }
