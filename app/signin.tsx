@@ -4,9 +4,9 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  TextInput,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
@@ -16,6 +16,8 @@ import { COLORS, EMAIL_REGEX } from "@/constants/constants"
 import Divider from "@/core/Divider"
 import { movieApi, SignInUser } from "@/api/api"
 import { storage } from "@/storage/starage"
+import Input from "@/core/Input"
+import Button from "@/core/Button"
 
 const Page = () => {
   const router = useRouter()
@@ -86,55 +88,33 @@ const Page = () => {
         <Text style={styles.logo}>MovieInfo</Text>
         <Divider height={40} isTransparent />
 
-        <View style={styles.inputContainer}>
-          <AntDesign name="mail" size={24} />
-          <TextInput
-            cursorColor={COLORS.grey}
-            style={email ? styles.input : styles.inputPlacheholder}
-            value={email}
-            maxLength={40}
-            onChangeText={(text) => setEmail(text)}
-            keyboardType="email-address"
-            placeholderTextColor={COLORS.grey}
-            placeholder={emailIsFocused ? "" : "Email"}
-            onFocus={() => setEmailIsFocused(true)}
-            onBlur={() => {
-              const trimmedText = email.trim()
-              setEmail(trimmedText)
-
-              if (!trimmedText) setEmailIsFocused(false)
-              if (trimmedText) setEmailIsFocused(true)
-            }}
-          />
-        </View>
+        <Input
+          icon={<AntDesign name="mail" size={24} />}
+          value={email}
+          setValue={setEmail}
+          placeholder="Email"
+          valueIsFocused={emailIsFocused}
+          setValueIsFocused={setEmailIsFocused}
+          keyboardType={"email-address"}
+        />
 
         <Divider height={10} isTransparent />
-
-        <View style={styles.inputContainer}>
-          <AntDesign name="lock" size={24} />
-          <TextInput
-            cursorColor={COLORS.grey}
-            style={password ? styles.input : styles.inputPlacheholder}
-            value={password}
-            maxLength={40}
-            onChangeText={(text) => setPassword(text)}
-            placeholderTextColor={COLORS.grey}
-            placeholder={passwordIsFocused ? "" : "Password"}
-            onFocus={() => setPasswordIsFocused(true)}
-            onBlur={() => {
-              const trimmedText = password.trim()
-              setPassword(trimmedText)
-              if (!trimmedText) setPasswordIsFocused(false)
-              if (trimmedText) setPasswordIsFocused(true)
-            }}
-          />
-        </View>
+        <Input
+          icon={<AntDesign name="lock" size={24} />}
+          value={password}
+          setValue={setPassword}
+          placeholder="Password"
+          valueIsFocused={passwordIsFocused}
+          setValueIsFocused={setPasswordIsFocused}
+          keyboardType={"default"}
+        />
 
         <Divider height={40} isTransparent />
-
-        <TouchableOpacity style={styles.btn} onPress={handleSignIn}>
-          <Text style={styles.btnText}>Sign in</Text>
-        </TouchableOpacity>
+        {signInUserMutation.isPending ? (
+          <ActivityIndicator size="large" color={COLORS.blue} />
+        ) : (
+          <Button title={"Sign in"} handler={handleSignIn} />
+        )}
 
         <Divider height={10} isTransparent />
 
@@ -168,44 +148,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "500",
   },
-
-  inputContainer: {
-    flexDirection: "row",
-    width: "100%",
-    height: 50,
-    borderWidth: 2,
-    borderColor: COLORS.black,
-    borderRadius: 10,
-    alignItems: "center",
-    paddingHorizontal: 10,
-    backgroundColor: COLORS.white,
-  },
-
-  input: {
-    flex: 1,
-    marginLeft: 10,
-    color: COLORS.black,
-    fontSize: 20,
-  },
-
-  inputPlacheholder: {
-    flex: 1,
-    marginLeft: 10,
-    color: COLORS.grey,
-    fontSize: 20,
-  },
-
-  btn: {
-    width: "100%",
-    height: 50,
-    backgroundColor: COLORS.black,
-    borderColor: COLORS.black,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  btnText: { color: COLORS.white, fontSize: 24, fontWeight: "500" },
 
   notMemberText: {
     color: COLORS.grey,
