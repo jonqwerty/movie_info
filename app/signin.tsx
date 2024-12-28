@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { Text, TouchableOpacity, View, StyleSheet, TextInput, ScrollView } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
-
-import { Colors } from "@/constants/Colors"
-import Divider from "@/components/Divider"
 import { useRouter } from "expo-router"
+
+import { COLORS } from "@/constants/constants"
+import Divider from "@/components/Divider"
 
 const Page = () => {
   const router = useRouter()
@@ -35,13 +35,13 @@ const Page = () => {
         <View style={styles.inputContainer}>
           <AntDesign name="mail" size={24} />
           <TextInput
-            cursorColor={Colors.grey}
+            cursorColor={COLORS.grey}
             style={email ? styles.input : styles.inputPlacheholder}
             value={email}
             maxLength={40}
             onChangeText={(text) => setEmail(text)}
             keyboardType="email-address"
-            placeholderTextColor={Colors.grey}
+            placeholderTextColor={COLORS.grey}
             placeholder={emailIsFocused ? "" : "Email"}
             onFocus={() => setEmailIsFocused(true)}
             onBlur={() => {
@@ -59,12 +59,12 @@ const Page = () => {
         <View style={styles.inputContainer}>
           <AntDesign name="lock" size={24} />
           <TextInput
-            cursorColor={Colors.grey}
+            cursorColor={COLORS.grey}
             style={password ? styles.input : styles.inputPlacheholder}
             value={password}
             maxLength={40}
             onChangeText={(text) => setPassword(text)}
-            placeholderTextColor={Colors.grey}
+            placeholderTextColor={COLORS.grey}
             placeholder={passwordIsFocused ? "" : "Password"}
             onFocus={() => setPasswordIsFocused(true)}
             onBlur={() => {
@@ -103,7 +103,7 @@ export default Page
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
     alignItems: "center",
     paddingHorizontal: 20,
   },
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     borderWidth: 2,
-    borderColor: Colors.black,
+    borderColor: COLORS.black,
     borderRadius: 10,
     alignItems: "center",
     paddingHorizontal: 10,
@@ -129,31 +129,31 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginLeft: 10,
-    color: Colors.black,
+    color: COLORS.black,
     fontSize: 20,
   },
 
   inputPlacheholder: {
     flex: 1,
     marginLeft: 10,
-    color: Colors.grey,
+    color: COLORS.grey,
     fontSize: 20,
   },
 
   btn: {
     width: "100%",
     height: 50,
-    backgroundColor: Colors.black,
-    borderColor: Colors.black,
+    backgroundColor: COLORS.black,
+    borderColor: COLORS.black,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
   },
 
-  btnText: { color: Colors.white, fontSize: 24, fontWeight: "500" },
+  btnText: { color: COLORS.white, fontSize: 24, fontWeight: "500" },
 
   notMemberText: {
-    color: Colors.grey,
+    color: COLORS.grey,
     fontSize: 14,
     marginTop: "auto",
   },
@@ -162,12 +162,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderWidth: 2,
-    borderColor: Colors.black,
+    borderColor: COLORS.black,
     borderRadius: 50,
   },
 
   createAccountText: {
-    color: Colors.black,
+    color: COLORS.black,
     fontSize: 14,
     fontWeight: "500",
   },
