@@ -13,19 +13,19 @@ const RootLayout = () => {
   const router = useRouter()
   const pathname = usePathname()
 
+  const [loaded] = useFonts({
+    Aclonica: require("../assets/fonts/Aclonica-Regular.ttf"),
+  })
+
   useEffect(() => {
     const token = storage.getString("token")
 
-    if (token) {
+    if (token && loaded) {
       router.replace("/(authenticated)/movie/list")
-    } else if (pathname !== "/") {
+    } else if (pathname !== "/" && loaded) {
       router.replace("/")
     }
-  }, [router])
-
-  // const [loaded] = useFonts({
-  //   Aclonica: require("../assets/fonts/Aclonica-Regular.ttf"),
-  // })
+  }, [router, loaded])
 
   // useEffect(() => {
   //   if (loaded) {
@@ -33,9 +33,9 @@ const RootLayout = () => {
   //   }
   // }, [loaded])
 
-  // if (!loaded) {
-  //   return null
-  // }
+  if (!loaded) {
+    return null
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
