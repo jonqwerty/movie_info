@@ -116,7 +116,27 @@ const Page = () => {
         <AntDesign name="dingding" size={70} />
         <Divider height={20} isTransparent />
         <Text style={styles.logo}>MovieInfo</Text>
-        <Divider height={40} isTransparent />
+
+        <TextInput
+          style={{
+            borderWidth: 1,
+            borderColor: COLORS.grey,
+            padding: 10,
+            marginVertical: 10,
+          }}
+          placeholder="192.168.x.x"
+          onChangeText={(text) => setIp(text)}
+          value={ip}
+        />
+        <ButtonRN
+          title="Set ip for back connection"
+          onPress={() => {
+            storage.set("ip", ip)
+            setIp("")
+          }}
+        />
+
+        <Divider height={20} isTransparent />
 
         <Input
           icon={<AntDesign name="user" size={24} />}
@@ -159,25 +179,6 @@ const Page = () => {
           valueIsFocused={confirmPasswordIsFocused}
           setValueIsFocused={setConfirmPasswordIsFocused}
           keyboardType={"default"}
-        />
-
-        <TextInput
-          style={{
-            borderWidth: 1,
-            borderColor: "#ccc",
-            padding: 10,
-            marginVertical: 10,
-          }}
-          placeholder="192.168.x.x"
-          onChangeText={(text) => setIp(text)}
-          value={ip}
-        />
-        <ButtonRN
-          title="Set ip for back connection"
-          onPress={() => {
-            storage.set("ip", ip)
-            setIp("")
-          }}
         />
 
         <Divider height={40} isTransparent />

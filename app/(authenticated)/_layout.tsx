@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, useWindowDimensions } from "react-native"
+import { View, Text, useWindowDimensions, TouchableOpacity } from "react-native"
 import { Stack, useRouter } from "expo-router"
 
 import { storage } from "@/storage/starage"
@@ -16,17 +16,15 @@ const Layout = () => {
         options={{
           title: "Movies",
           headerRight: () => (
-            <View>
-              <Text
-                style={{ fontWeight: "500", color: COLORS.orange }}
-                onPress={() => {
-                  storage.delete("token")
-                  router.replace("/")
-                }}
-              >
-                Log out
-              </Text>
-            </View>
+            <TouchableOpacity
+              style={{ padding: 12 }}
+              onPress={() => {
+                storage.delete("token")
+                router.replace("/")
+              }}
+            >
+              <Text style={{ fontWeight: "500", color: COLORS.orange }}>Log out</Text>
+            </TouchableOpacity>
           ),
         }}
       />

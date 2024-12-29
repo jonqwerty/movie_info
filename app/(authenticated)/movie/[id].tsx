@@ -68,10 +68,21 @@ const Page = () => {
   }
 
   return (
-    <View>
-      {deleteMovieMutation.isPending ? <Loader /> : null}
+    <>
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <TouchableOpacity onPress={handleDeleteMovie} style={{ padding: 12 }}>
+              <AntDesign name="delete" size={24} color={COLORS.orange} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
 
-      {/* {Platform.OS === "android" ? (
+      <View style={{ flex: 1, backgroundColor: COLORS.pale }}>
+        {deleteMovieMutation.isPending ? <Loader /> : null}
+
+        {/* {Platform.OS === "android" ? (
         <View
           style={{ height: 60, borderBottomWidth: StyleSheet.hairlineWidth, alignItems: "center" }}
         >
@@ -90,53 +101,44 @@ const Page = () => {
         </View>
       ) : null} */}
 
-      <Stack.Screen
-        options={{
-          headerRight: () => (
-            <TouchableOpacity onPress={handleDeleteMovie}>
-              <AntDesign name="delete" size={24} color={COLORS.orange} />
-            </TouchableOpacity>
-          ),
-        }}
-      />
+        <View style={styles.container}>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textOne}>Id:</Text>
+            <Text style={styles.textTwo}>{data?.data?.id}</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textOne}>Title:</Text>
+            <Text style={styles.textTwo}>{data?.data?.title}</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textOne}>Year:</Text>
+            <Text style={styles.textTwo}>{data?.data?.year}</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textOne}>Format:</Text>
+            <Text style={styles.textTwo}>{data?.data?.format}</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textOne}>Created at:</Text>
+            <Text style={styles.textTwo}>{dateConverter(data?.data?.createdAt)}</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textOne}>Updated at:</Text>
+            <Text style={styles.textTwo}>{dateConverter(data?.data?.updatedAt)}</Text>
+          </View>
 
-      <View style={styles.container}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textOne}>Id:</Text>
-          <Text style={styles.textTwo}>{data?.data?.id}</Text>
+          <Divider isTransparent height={20} />
+          <Text style={styles.textOne}>Actors:</Text>
+          {data?.data?.actors.map((item, index) => {
+            return (
+              <Text key={index} style={styles.textTwoAndroid}>
+                {item.name}
+              </Text>
+            )
+          })}
         </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textOne}>Title:</Text>
-          <Text style={styles.textTwo}>{data?.data?.title}</Text>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textOne}>Year:</Text>
-          <Text style={styles.textTwo}>{data?.data?.year}</Text>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textOne}>Format:</Text>
-          <Text style={styles.textTwo}>{data?.data?.format}</Text>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textOne}>Created at:</Text>
-          <Text style={styles.textTwo}>{dateConverter(data?.data?.createdAt)}</Text>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textOne}>Updated at:</Text>
-          <Text style={styles.textTwo}>{dateConverter(data?.data?.updatedAt)}</Text>
-        </View>
-
-        <Divider isTransparent height={20} />
-        <Text style={styles.textOne}>Actors:</Text>
-        {data?.data?.actors.map((item, index) => {
-          return (
-            <Text key={index} style={styles.textTwoAndroid}>
-              {item.name}
-            </Text>
-          )
-        })}
       </View>
-    </View>
+    </>
   )
 }
 

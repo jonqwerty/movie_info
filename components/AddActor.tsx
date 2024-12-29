@@ -45,7 +45,7 @@ const AddActor: FC<AddActorProps> = ({
             keyboardType={"default"}
           />
           <TouchableOpacity onPress={handleAddActor}>
-            <AntDesign name="plussquare" size={24} color={COLORS.black} />
+            <AntDesign name="plussquare" size={44} color={COLORS.black} />
           </TouchableOpacity>
         </View>
       </View>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
-    marginHorizontal: 20,
+    marginHorizontal: 26,
     marginTop: "auto",
   },
 
