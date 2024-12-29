@@ -36,7 +36,17 @@ const Layout = () => {
           title: "Add movie",
         }}
       />
-      <Stack.Screen name="movie/[id]" options={{}} />
+      <Stack.Screen
+        name="movie/[id]"
+        options={{
+          title: "Movie info", // ios only
+          presentation: "formSheet",
+          sheetAllowedDetents: height > 700 ? [0.6, 0.9] : "fitToContents",
+          sheetGrabberVisible: true, // ios only
+          sheetCornerRadius: 15,
+          sheetExpandsWhenScrolledToEdge: true, // ?
+        }}
+      />
     </Stack>
   )
 }

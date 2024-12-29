@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, ActivityIndicator } from "react-native"
+import { StyleSheet, Text, View, FlatList } from "react-native"
 import React from "react"
 import { useQuery } from "@tanstack/react-query"
+import { Link } from "expo-router"
 
 import { movieApi } from "@/api/api"
 import { COLORS } from "@/constants/constants"
 import Fab from "@/core/Fab"
+import Loader from "@/core/Loader"
 
 const Page = () => {
   const { data, error, isPending } = useQuery({
@@ -13,11 +15,7 @@ const Page = () => {
   })
 
   if (isPending) {
-    return (
-      <View style={styles.containerLoading}>
-        <ActivityIndicator size="large" color={COLORS.blue} />
-      </View>
-    )
+    return <Loader />
   }
 
   if (error) {
@@ -34,9 +32,9 @@ const Page = () => {
         showsVerticalScrollIndicator={false}
         data={data.data}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.itemMovieContainer} onPress={() => {}}>
+          <Link href={`/movie/${item.id}`} style={styles.itemMovieContainer} asChild>
             <Text style={styles.itemMovieTitle}>{item.title}</Text>
-          </TouchableOpacity>
+          </Link>
         )}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => (
@@ -76,12 +74,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: COLORS.pale,
   },
-  containerLoading: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
+
   itemMovieContainer: {
     borderWidth: 1,
     borderColor: COLORS.grey,
@@ -92,5 +85,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     elevation: 4,
   },
+
   itemMovieTitle: { fontStyle: "italic", fontWeight: "700" },
 })
