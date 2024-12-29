@@ -4,8 +4,6 @@ import { Platform } from "react-native"
 const BASE_URL =
   Platform.OS === "android" ? "http://10.0.2.2:8000/api/v1" : "http://localhost:8000/api/v1"
 
-const token = storage.getString("token")
-
 export type Format = "VHS" | "DVD" | "Blu-ray"
 
 export type Actor = {
@@ -95,6 +93,7 @@ export const movieApi = {
   },
 
   getMovies: async () => {
+    const token = storage.getString("token")
     const response = await fetch(`${BASE_URL}/movies?sort=title&limit=1000`, {
       method: "GET",
       headers: {
@@ -114,6 +113,7 @@ export const movieApi = {
   },
 
   createMovie: async (movieData: CreateMovie) => {
+    const token = storage.getString("token")
     const response = await fetch(`${BASE_URL}/movies`, {
       method: "POST",
       headers: {
@@ -134,6 +134,7 @@ export const movieApi = {
   },
 
   getMovie: async (id: string) => {
+    const token = storage.getString("token")
     const response = await fetch(`${BASE_URL}/movies/${id}`, {
       method: "GET",
       headers: {
@@ -153,6 +154,7 @@ export const movieApi = {
   },
 
   deleteMovie: async (id: string) => {
+    const token = storage.getString("token")
     const response = await fetch(`${BASE_URL}/movies/${id}`, {
       method: "DELETE",
       headers: {
