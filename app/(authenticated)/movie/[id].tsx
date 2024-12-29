@@ -1,4 +1,4 @@
-import { Alert, Platform, Pressable, StyleSheet, Text, View } from "react-native"
+import { Alert, Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import React from "react"
 import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 import { COLORS } from "@/constants/constants"
@@ -71,7 +71,7 @@ const Page = () => {
     <View>
       {deleteMovieMutation.isPending ? <Loader /> : null}
 
-      {Platform.OS === "android" ? (
+      {/* {Platform.OS === "android" ? (
         <View
           style={{ height: 60, borderBottomWidth: StyleSheet.hairlineWidth, alignItems: "center" }}
         >
@@ -88,14 +88,14 @@ const Page = () => {
             <AntDesign name="delete" size={24} color={COLORS.orange} />
           </Pressable>
         </View>
-      ) : null}
+      ) : null} */}
 
       <Stack.Screen
         options={{
           headerRight: () => (
-            <Pressable onPress={handleDeleteMovie}>
+            <TouchableOpacity onPress={handleDeleteMovie}>
               <AntDesign name="delete" size={24} color={COLORS.orange} />
-            </Pressable>
+            </TouchableOpacity>
           ),
         }}
       />
