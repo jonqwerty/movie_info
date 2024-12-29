@@ -2,7 +2,7 @@ import { Alert, Platform, Pressable, StyleSheet, Text, View } from "react-native
 import React from "react"
 import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 import { COLORS } from "@/constants/constants"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { AntDesign } from "@expo/vector-icons"
 
 import { movieApi } from "@/api/api"
@@ -13,6 +13,7 @@ import { dateConverter } from "@/utils/helpers"
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>()
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const { data, error, isPending } = useQuery({
     queryKey: ["movieList", id],
@@ -30,6 +31,9 @@ const Page = () => {
           )}`
         )
         return
+      }
+      if (data.status === 1) {
+        queryClient.invalidateQueries({ queryKey: ["movieList"] })
       }
     },
 

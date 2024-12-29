@@ -1,6 +1,6 @@
 import { Alert, ScrollView, StyleSheet, View, Text } from "react-native"
 import React, { useState } from "react"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "expo-router"
 
 import Input from "@/core/Input"
@@ -12,6 +12,7 @@ import { CreateMovie, Format, movieApi } from "@/api/api"
 
 const Page = () => {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const [title, setTitle] = useState<string>("")
   const [year, setYear] = useState<string>("")
@@ -48,6 +49,7 @@ const Page = () => {
         setYearIsFocused(false)
         setFormatdIsFocused(false)
         setActorIsFocused(false)
+        queryClient.invalidateQueries({ queryKey: ["movieList"] })
       }
     },
     onError: (error) => {
