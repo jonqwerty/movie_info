@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
   contentContainerStyle: { flexGrow: 1, alignItems: "center" },
 
   logo: {
+    fontFamily: "Aclonica",
     fontSize: 40,
     fontWeight: "500",
   },

@@ -1,9 +1,11 @@
 import { useEffect } from "react"
 import { Stack, usePathname, useRouter } from "expo-router"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import * as SplashScreen from "expo-splash-screen"
 
 import { COLORS } from "@/constants/constants"
 import { storage } from "@/storage/starage"
+import { useFonts } from "expo-font"
 
 const queryClient = new QueryClient()
 
@@ -20,6 +22,20 @@ const RootLayout = () => {
       router.replace("/")
     }
   }, [router])
+
+  const [loaded] = useFonts({
+    Aclonica: require("../assets/fonts/Aclonica-Regular.ttf"),
+  })
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync()
+    }
+  }, [loaded])
+
+  if (!loaded) {
+    return null
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
