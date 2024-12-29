@@ -1,8 +1,13 @@
 import { storage } from "@/storage/starage"
 import { Platform } from "react-native"
 
-const BASE_URL =
-  Platform.OS === "android" ? "http://10.0.2.2:8000/api/v1" : "http://localhost:8000/api/v1"
+const baseUrl = () => {
+  const ip = storage.getString("ip")
+
+  const BASE_URL =
+    Platform.OS === "android" ? `http://${ip}:8000/api/v1` : "http://localhost:8000/api/v1"
+  return BASE_URL
+}
 
 export type Format = "VHS" | "DVD" | "Blu-ray"
 
@@ -55,7 +60,7 @@ export type CreateMovieDto = {
 
 export const movieApi = {
   createUser: async (userData: CreateUser) => {
-    const response = await fetch(`${BASE_URL}/users`, {
+    const response = await fetch(`${baseUrl()}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +79,7 @@ export const movieApi = {
   },
 
   signInUser: async (userData: SignInUser) => {
-    const response = await fetch(`${BASE_URL}/sessions`, {
+    const response = await fetch(`${baseUrl()}/sessions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +99,7 @@ export const movieApi = {
 
   getMovies: async () => {
     const token = storage.getString("token")
-    const response = await fetch(`${BASE_URL}/movies?sort=title&limit=1000`, {
+    const response = await fetch(`${baseUrl()}/movies?sort=title&limit=1000`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +119,7 @@ export const movieApi = {
 
   createMovie: async (movieData: CreateMovie) => {
     const token = storage.getString("token")
-    const response = await fetch(`${BASE_URL}/movies`, {
+    const response = await fetch(`${baseUrl()}/movies`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -135,7 +140,7 @@ export const movieApi = {
 
   getMovie: async (id: string) => {
     const token = storage.getString("token")
-    const response = await fetch(`${BASE_URL}/movies/${id}`, {
+    const response = await fetch(`${baseUrl()}/movies/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -155,7 +160,7 @@ export const movieApi = {
 
   deleteMovie: async (id: string) => {
     const token = storage.getString("token")
-    const response = await fetch(`${BASE_URL}/movies/${id}`, {
+    const response = await fetch(`${baseUrl()}/movies/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `${token}`,

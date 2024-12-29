@@ -23,19 +23,19 @@ const RootLayout = () => {
     }
   }, [router])
 
-  const [loaded] = useFonts({
-    Aclonica: require("../assets/fonts/Aclonica-Regular.ttf"),
-  })
+  // const [loaded] = useFonts({
+  //   Aclonica: require("../assets/fonts/Aclonica-Regular.ttf"),
+  // })
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync()
-    }
-  }, [loaded])
+  // useEffect(() => {
+  //   if (loaded) {
+  //     SplashScreen.hideAsync()
+  //   }
+  // }, [loaded])
 
-  if (!loaded) {
-    return null
-  }
+  // if (!loaded) {
+  //   return null
+  // }
 
   return (
     <QueryClientProvider client={queryClient}>

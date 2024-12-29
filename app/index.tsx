@@ -7,6 +7,8 @@ import {
   Alert,
   ActivityIndicator,
   Platform,
+  TextInput,
+  Button as ButtonRN,
 } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { usePathname, useRouter } from "expo-router"
@@ -33,6 +35,8 @@ const Page = () => {
   const [emailIsFocused, setEmailIsFocused] = useState<boolean>(false)
   const [passwordIsFocused, setPasswordIsFocused] = useState<boolean>(false)
   const [confirmPasswordIsFocused, setConfirmPasswordIsFocused] = useState<boolean>(false)
+
+  const [ip, setIp] = useState<string>("")
 
   useEffect(() => {
     setName("")
@@ -157,6 +161,25 @@ const Page = () => {
           keyboardType={"default"}
         />
 
+        <TextInput
+          style={{
+            borderWidth: 1,
+            borderColor: "#ccc",
+            padding: 10,
+            marginVertical: 10,
+          }}
+          placeholder="192.168.x.x"
+          onChangeText={(text) => setIp(text)}
+          value={ip}
+        />
+        <ButtonRN
+          title="Set ip for back connection"
+          onPress={() => {
+            storage.set("ip", ip)
+            setIp("")
+          }}
+        />
+
         <Divider height={40} isTransparent />
         {createUserMutation.isPending ? (
           <ActivityIndicator size="large" color={COLORS.blue} />
@@ -193,6 +216,7 @@ const styles = StyleSheet.create({
   contentContainerStyle: { flexGrow: 1, alignItems: "center" },
 
   logo: {
+    textAlign: "center",
     fontFamily: "Aclonica",
     fontSize: 40,
     fontWeight: "500",
