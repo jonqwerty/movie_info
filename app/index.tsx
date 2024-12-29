@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react"
-import { Text, View, StyleSheet, ScrollView, Alert, ActivityIndicator } from "react-native"
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+  Platform,
+} from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { usePathname, useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
@@ -100,7 +108,7 @@ const Page = () => {
         style={{ width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        <Divider height={40} isTransparent />
+        <Divider height={Platform.OS === "android" ? 40 : 60} isTransparent />
         <AntDesign name="dingding" size={70} />
         <Divider height={20} isTransparent />
         <Text style={styles.logo}>MovieInfo</Text>
@@ -166,7 +174,7 @@ const Page = () => {
           </Text>
         </Text>
 
-        <Divider height={20} isTransparent />
+        <Divider height={Platform.OS === "android" ? 20 : 40} isTransparent />
       </ScrollView>
     </View>
   )

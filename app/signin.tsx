@@ -7,6 +7,7 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
+  Platform,
 } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
@@ -82,7 +83,7 @@ const Page = () => {
         style={{ width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        <Divider height={40} isTransparent />
+        <Divider height={Platform.OS === "android" ? 40 : 60} isTransparent />
         <AntDesign name="dingding" size={70} />
         <Divider height={20} isTransparent />
         <Text style={styles.logo}>MovieInfo</Text>
@@ -126,7 +127,7 @@ const Page = () => {
           <Text style={styles.createAccountText}>Create an account</Text>
         </TouchableOpacity>
 
-        <Divider height={20} isTransparent />
+        <Divider height={Platform.OS === "android" ? 20 : 40} isTransparent />
       </ScrollView>
     </View>
   )
