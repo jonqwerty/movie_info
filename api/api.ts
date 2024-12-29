@@ -43,7 +43,7 @@ export type UserDto = {
 export type CreateMovieDto = {
   status: number
   token?: string
-  error?: { code: string; fields: object }
+  error?: { code: string; fields: object; message: string }
   data: {
     id: number
     title: string
@@ -145,6 +145,24 @@ export const movieApi = {
     if (!response.ok) {
       const errorData = await response.json()
       throw new Error(errorData.message || `Failed to get movie with id:${id} `)
+    }
+
+    const data = await response.json()
+
+    return data as CreateMovieDto
+  },
+
+  deleteMovie: async (id: string) => {
+    const response = await fetch(`${BASE_URL}/movies/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.message || `Failed to delete movie with id:${id} `)
     }
 
     const data = await response.json()

@@ -1,8 +1,9 @@
-import { Platform, StyleSheet, Text, View } from "react-native"
+import { Alert, Platform, Pressable, StyleSheet, Text, View } from "react-native"
 import React from "react"
-import { useLocalSearchParams } from "expo-router"
+import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 import { COLORS } from "@/constants/constants"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { AntDesign } from "@expo/vector-icons"
 
 import { movieApi } from "@/api/api"
 import Loader from "@/core/Loader"
@@ -11,11 +12,44 @@ import { dateConverter } from "@/utils/helpers"
 
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>()
+  const router = useRouter()
 
   const { data, error, isPending } = useQuery({
     queryKey: ["movieList", id],
     queryFn: () => movieApi.getMovie(id),
   })
+
+  const deleteMovieMutation = useMutation({
+    mutationFn: () => movieApi.deleteMovie(id),
+    onSuccess: (data) => {
+      if (data.status === 0) {
+        Alert.alert(
+          "Error",
+          `Failed to delete movie. Code: ${data?.error?.code}. Error fields: ${JSON.stringify(
+            data?.error?.fields || data?.error?.message
+          )}`
+        )
+        return
+      }
+    },
+
+    onError: (error) => {
+      Alert.alert("Error", error.message || "An error occurred")
+    },
+  })
+
+  const handleDeleteMovie = () => {
+    Alert.alert("Alert", "Are you sure you want to delete movie?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          deleteMovieMutation.mutate()
+          router.back()
+        },
+      },
+      { text: "No", onPress: undefined },
+    ])
+  }
 
   if (isPending) {
     return <Loader />
@@ -31,14 +65,37 @@ const Page = () => {
 
   return (
     <View>
+      {deleteMovieMutation.isPending ? <Loader /> : null}
+
       {Platform.OS === "android" ? (
         <View
           style={{ height: 60, borderBottomWidth: StyleSheet.hairlineWidth, alignItems: "center" }}
         >
           <View style={styles.grabber} />
           <Text style={styles.titleModal}>Movie info</Text>
+          <Pressable
+            style={{
+              position: "absolute",
+              right: 20,
+              top: 20,
+            }}
+            onPress={handleDeleteMovie}
+          >
+            <AntDesign name="delete" size={24} color={COLORS.orange} />
+          </Pressable>
         </View>
       ) : null}
+
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <Pressable onPress={handleDeleteMovie}>
+              <AntDesign name="delete" size={24} color={COLORS.orange} />
+            </Pressable>
+          ),
+        }}
+      />
+
       <View style={styles.container}>
         <View style={styles.rowContainer}>
           <Text style={styles.textOne}>Id:</Text>
